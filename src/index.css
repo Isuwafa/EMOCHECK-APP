@@ -20,3 +20,14 @@ body {
 .navbar a { color: #e0e7ff; text-decoration: none; padding: 4px 8px; border-radius: 6px; }
 .navbar a.active { background: white; color: #4f46e5; font-weight: 600; }
 .container { max-width: 800px; margin: 24px auto; padding: 0 16px; }
+.card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+h2 { font-size: 1.05rem; margin: 20px 0 8px; }
+.mood-row, .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.mood { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 14px; border: 2px solid #c7d2fe; background: white; border-radius: 10px; cursor: pointer; }
+.mood.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+.tag { padding: 6px 14px; border: 1px solid #c7d2fe; background: white; border-radius: 999px; cursor: pointer; }
+.tag.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+.prompt { font-style: italic; color: #4b5563; }
+textarea { width: 100%; padding: 10px; border: 1px solid #c7d2fe; border-radius: 8px; font: inherit; }
+.primary { margin-top: 16px; padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+.message { margin-top: 12px; color: #047857; font-weight: 600; }
