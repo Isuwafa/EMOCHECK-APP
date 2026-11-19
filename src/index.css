@@ -40,3 +40,7 @@ textarea { width: 100%; padding: 10px; border: 1px solid #c7d2fe; border-radius:
 .tag.static { cursor: default; background: #eef2ff; }
 .history-reflection { margin: 10px 0; font-style: italic; }
 .link-danger { background: none; border: none; color: #b91c1c; cursor: pointer; padding: 0; text-decoration: underline; font: inherit; }
+.data-box { background: #eef2ff; border-radius: 10px; padding: 4px 16px; margin: 16px 0; }
+.danger { padding: 10px 20px; background: #b91c1c; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+.secondary { margin-left: 8px; padding: 10px 20px; background: white; color: #374151; border: 1px solid #9ca3af; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+.confirm-box { border: 1px solid #fecaca; background: #fef2f2; border-radius: 10px; padding: 12px 16px; }
