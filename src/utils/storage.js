@@ -35,3 +35,8 @@ export function deleteCheckIn(id) {
   localStorage.setItem(CHECKINS_KEY, JSON.stringify(remaining));
   return remaining;
 }
+export function deleteAllData() {
+  localStorage.removeItem(CHECKINS_KEY);
+  localStorage.removeItem("emocheck_bookmarks");
+  localStorage.removeItem(DEVICE_KEY);
+}
