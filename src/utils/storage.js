@@ -30,3 +30,8 @@ export function saveCheckIn({ mood, tags, reflection }) {
   localStorage.setItem(CHECKINS_KEY, JSON.stringify([entry, ...getCheckIns()]));
   return entry;
 }
+export function deleteCheckIn(id) {
+  const remaining = getCheckIns().filter((entry) => entry.id !== id);
+  localStorage.setItem(CHECKINS_KEY, JSON.stringify(remaining));
+  return remaining;
+}
