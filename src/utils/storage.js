@@ -40,3 +40,21 @@ export function deleteAllData() {
   localStorage.removeItem("emocheck_bookmarks");
   localStorage.removeItem(DEVICE_KEY);
 }
+const BOOKMARKS_KEY = "emocheck_bookmarks";
+
+export function getBookmarks() {
+  try {
+    return JSON.parse(localStorage.getItem(BOOKMARKS_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+export function toggleBookmark(resourceId) {
+  const current = getBookmarks();
+  const updated = current.includes(resourceId)
+    ? current.filter((id) => id !== resourceId)
+    : [...current, resourceId];
+  localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(updated));
+  return updated;
+}
