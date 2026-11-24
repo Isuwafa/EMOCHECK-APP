@@ -1,8 +1,11 @@
-﻿export default function Home() {
+﻿import { useLang } from "../i18n/LanguageContext";
+
+export default function Home() {
+  const { t } = useLang();
   return (
     <section>
-      <h1>Welcome to EmoCheck</h1>
-      <p>A daily emotional check-in and support finder for Rwandan youth.</p>
+      <h1>{t("home.title")}</h1>
+      <p>{t("home.text")}</p>
     </section>
   );
 }
