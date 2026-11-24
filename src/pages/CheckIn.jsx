@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { saveCheckIn } from "../utils/storage";
+import Recommendations from "../components/Recommendations";
 
 const MOODS = [
   { value: 1, label: "Very low" },
@@ -27,6 +28,7 @@ export default function CheckIn() {
   const [tags, setTags] = useState([]);
   const [reflection, setReflection] = useState("");
   const [message, setMessage] = useState("");
+  const [justSaved, setJustSaved] = useState(false);
   const prompt = PROMPTS[new Date().getDate() % PROMPTS.length];
 
   function toggleTag(tag) {
@@ -45,6 +47,7 @@ export default function CheckIn() {
     setTags([]);
     setReflection("");
     setMessage("Check-in saved. Thank you for checking in today.");
+    setJustSaved(true);
   }
 
   return (
@@ -91,6 +94,7 @@ export default function CheckIn() {
         Save check-in
       </button>
       {message && <p className="message">{message}</p>}
+      {justSaved && <Recommendations />}
     </section>
   );
 }
