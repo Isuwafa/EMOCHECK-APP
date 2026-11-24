@@ -1,9 +1,11 @@
 ﻿import { useState } from "react";
 import { getResources } from "../utils/resources";
 import { CATEGORIES } from "../data/resources";
+import { getBookmarks, toggleBookmark } from "../utils/storage";
 
 export default function Support() {
   const [resources] = useState(getResources());
+  const [bookmarks, setBookmarks] = useState(getBookmarks());
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -52,23 +54,32 @@ export default function Support() {
           <p>No resources match your search.</p>
         ) : (
           <ul className="resource-list">
-            {filtered.map((r) => (
-              <li key={r.id} className="resource-item">
-                <div className="resource-top">
-                  <h3>{r.name}</h3>
-                  <span className="badge">{r.category}</span>
-                </div>
-                <p>{r.description}</p>
-                <p className="resource-meta">
-                  {r.location}
-                  {r.phone && (
-                    <>
-                      {" "}&middot; <a href={"tel:" + r.phone}>Call {r.phone}</a>
-                    </>
-                  )}
-                </p>
-              </li>
-            ))}
+            {filtered.map((r) => {
+              const saved = bookmarks.includes(r.id);
+              return (
+                <li key={r.id} className="resource-item">
+                  <div className="resource-top">
+                    <h3>{r.name}</h3>
+                    <span className="badge">{r.category}</span>
+                  </div>
+                  <p>{r.description}</p>
+                  <p className="resource-meta">
+                    {r.location}
+                    {r.phone && (
+                      <>
+                        {" "}&middot; <a href={"tel:" + r.phone}>Call {r.phone}</a>
+                      </>
+                    )}
+                  </p>
+                  <button
+                    className={saved ? "save-btn saved" : "save-btn"}
+                    onClick={() => setBookmarks(toggleBookmark(r.id))}
+                  >
+                    {saved ? "Saved" : "Save"}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
