@@ -2,6 +2,7 @@
 import { getResources } from "../utils/resources";
 import { CATEGORIES } from "../data/resources";
 import { getBookmarks, toggleBookmark } from "../utils/storage";
+import Recommendations from "../components/Recommendations";
 
 export default function Support() {
   const [resources] = useState(getResources());
@@ -29,6 +30,7 @@ export default function Support() {
 
       <div className="card">
         <h1>Find Support</h1>
+        <Recommendations />
 
         <input
           className="search"
