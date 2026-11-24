@@ -27,7 +27,11 @@ export function saveCheckIn({ mood, tags, reflection }) {
     reflection,
     createdAt: new Date().toISOString(),
   };
-  localStorage.setItem(CHECKINS_KEY, JSON.stringify([entry, ...getCheckIns()]));
+    const today = new Date().toDateString();
+  const others = getCheckIns().filter(
+    (e) => new Date(e.createdAt).toDateString() !== today
+  );
+  localStorage.setItem(CHECKINS_KEY, JSON.stringify([entry, ...others]));
   return entry;
 }
 export function deleteCheckIn(id) {
