@@ -73,3 +73,10 @@ textarea { width: 100%; padding: 10px; border: 1px solid #c7d2fe; border-radius:
 .onboarding-actions { display: flex; justify-content: center; gap: 8px; }
 .onboarding-actions .secondary { margin-left: 0; }
 .onboarding-actions .primary { margin-top: 0; }
+.home-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.btn-link { display: inline-block; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 1rem; }
+.primary-link { background: #4f46e5; color: white; }
+.outline-link { border: 1px solid #4f46e5; color: #4f46e5; background: white; }
+.tip-card { margin-top: 16px; border-left: 6px solid #4f46e5; }
+.tip-text { font-size: 1.1rem; margin: 0; }
+.remember { text-align: center; color: #4b5563; font-style: italic; margin-top: 20px; }
