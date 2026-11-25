@@ -2,8 +2,10 @@
 import { Link } from "react-router-dom";
 import { getResources } from "../utils/resources";
 import { getBookmarks, toggleBookmark } from "../utils/storage";
+import { useLang } from "../i18n/LanguageContext";
 
 export default function Bookmarks() {
+  const { t } = useLang();
   const [resources] = useState(getResources());
   const [bookmarks, setBookmarks] = useState(getBookmarks());
 
@@ -11,12 +13,11 @@ export default function Bookmarks() {
 
   return (
     <section className="card">
-      <h1>Saved Resources</h1>
+      <h1>{t("saved.title")}</h1>
 
       {saved.length === 0 ? (
         <p>
-          You have not saved any resources yet.{" "}
-          <Link to="/support">Find support</Link>
+          {t("saved.empty")} <Link to="/support">{t("saved.find")}</Link>
         </p>
       ) : (
         <ul className="resource-list">
@@ -24,14 +25,14 @@ export default function Bookmarks() {
             <li key={r.id} className="resource-item">
               <div className="resource-top">
                 <h3>{r.name}</h3>
-                <span className="badge">{r.category}</span>
+                <span className="badge">{t("cat." + r.category)}</span>
               </div>
               <p>{r.description}</p>
               <p className="resource-meta">
                 {r.location}
                 {r.phone && (
                   <>
-                    {" "}&middot; <a href={"tel:" + r.phone}>Call {r.phone}</a>
+                    {" "}&middot; <a href={"tel:" + r.phone}>{t("support.call")} {r.phone}</a>
                   </>
                 )}
               </p>
@@ -39,7 +40,7 @@ export default function Bookmarks() {
                 className="link-danger"
                 onClick={() => setBookmarks(toggleBookmark(r.id))}
               >
-                Remove from saved
+                {t("saved.remove")}
               </button>
             </li>
           ))}

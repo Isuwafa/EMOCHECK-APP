@@ -1,10 +1,12 @@
 ﻿import { useState } from "react";
 import { getCheckIns, getDeviceId, deleteAllData } from "../utils/storage";
+import { useLang } from "../i18n/LanguageContext";
 
 export default function Settings() {
+  const { t } = useLang();
   const [count, setCount] = useState(getCheckIns().length);
   const [confirming, setConfirming] = useState(false);
-  const [message, setMessage] = useState("");
+  const [done, setDone] = useState(false);
   const [deviceId, setDeviceId] = useState(getDeviceId());
 
   function handleDelete() {
@@ -12,50 +14,44 @@ export default function Settings() {
     setCount(0);
     setConfirming(false);
     setDeviceId("");
-    setMessage("All your data has been deleted from this device.");
+    setDone(true);
   }
 
   return (
     <section className="card">
-      <h1>My Data</h1>
-      <p>
-        EmoCheck does not ask for your name or email. Your check-ins are stored
-        only on this device, under an anonymous ID.
-      </p>
+      <h1>{t("data.title")}</h1>
+      <p>{t("data.intro")}</p>
 
       <div className="data-box">
         <p>
-          <strong>Anonymous ID:</strong>{" "}
-          {deviceId ? deviceId.slice(0, 8) + "..." : "none"}
+          <strong>{t("data.id")}:</strong>{" "}
+          {deviceId ? deviceId.slice(0, 8) + "..." : t("data.none")}
         </p>
         <p>
-          <strong>Saved check-ins:</strong> {count}
+          <strong>{t("data.count")}:</strong> {count}
         </p>
       </div>
 
-      <h2>Delete my data</h2>
-      <p>
-        This permanently removes your check-ins, saved resources and anonymous ID
-        from this device. It cannot be undone.
-      </p>
+      <h2>{t("data.deleteTitle")}</h2>
+      <p>{t("data.deleteText")}</p>
 
       {!confirming ? (
         <button className="danger" onClick={() => setConfirming(true)}>
-          Delete all my data
+          {t("data.deleteBtn")}
         </button>
       ) : (
         <div className="confirm-box">
-          <p>Are you sure? All your data will be erased.</p>
+          <p>{t("data.confirm")}</p>
           <button className="danger" onClick={handleDelete}>
-            Yes, delete everything
+            {t("data.yes")}
           </button>
           <button className="secondary" onClick={() => setConfirming(false)}>
-            Cancel
+            {t("data.cancel")}
           </button>
         </div>
       )}
 
-      {message && <p className="message">{message}</p>}
+      {done && <p className="message">{t("data.done")}</p>}
     </section>
   );
 }

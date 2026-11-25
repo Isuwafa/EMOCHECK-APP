@@ -3,8 +3,10 @@ import { getResources } from "../utils/resources";
 import { CATEGORIES } from "../data/resources";
 import { getBookmarks, toggleBookmark } from "../utils/storage";
 import Recommendations from "../components/Recommendations";
+import { useLang } from "../i18n/LanguageContext";
 
 export default function Support() {
+  const { t } = useLang();
   const [resources] = useState(getResources());
   const [bookmarks, setBookmarks] = useState(getBookmarks());
   const [search, setSearch] = useState("");
@@ -19,23 +21,21 @@ export default function Support() {
   return (
     <section>
       <div className="crisis-banner">
-        <strong>Need help right now?</strong>
+        <strong>{t("support.bannerTitle")}</strong>
+        <p>{t("support.banner")}</p>
         <p>
-          If you or someone else is in immediate danger, call{" "}
-          <a href="tel:912">912</a> for an ambulance or{" "}
-          <a href="tel:114">114</a> (toll free) and go to the nearest hospital.
-          You do not have to face this alone.
+          <a href="tel:912">912</a> &middot; <a href="tel:114">114</a>
         </p>
       </div>
 
       <div className="card">
-        <h1>Find Support</h1>
+        <h1>{t("support.title")}</h1>
         <Recommendations />
 
         <input
           className="search"
           type="text"
-          placeholder="Search by name, place or keyword"
+          placeholder={t("support.search")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -47,13 +47,13 @@ export default function Support() {
               className={category === c ? "tag active" : "tag"}
               onClick={() => setCategory(c)}
             >
-              {c}
+              {t("cat." + c)}
             </button>
           ))}
         </div>
 
         {filtered.length === 0 ? (
-          <p>No resources match your search.</p>
+          <p>{t("support.none")}</p>
         ) : (
           <ul className="resource-list">
             {filtered.map((r) => {
@@ -62,14 +62,14 @@ export default function Support() {
                 <li key={r.id} className="resource-item">
                   <div className="resource-top">
                     <h3>{r.name}</h3>
-                    <span className="badge">{r.category}</span>
+                    <span className="badge">{t("cat." + r.category)}</span>
                   </div>
                   <p>{r.description}</p>
                   <p className="resource-meta">
                     {r.location}
                     {r.phone && (
                       <>
-                        {" "}&middot; <a href={"tel:" + r.phone}>Call {r.phone}</a>
+                        {" "}&middot; <a href={"tel:" + r.phone}>{t("support.call")} {r.phone}</a>
                       </>
                     )}
                   </p>
@@ -77,7 +77,7 @@ export default function Support() {
                     className={saved ? "save-btn saved" : "save-btn"}
                     onClick={() => setBookmarks(toggleBookmark(r.id))}
                   >
-                    {saved ? "Saved" : "Save"}
+                    {saved ? t("support.saved") : t("support.save")}
                   </button>
                 </li>
               );

@@ -1,14 +1,9 @@
 ﻿import { useState } from "react";
 import { saveCheckIn } from "../utils/storage";
 import Recommendations from "../components/Recommendations";
+import { useLang } from "../i18n/LanguageContext";
 
-const MOODS = [
-  { value: 1, label: "Very low" },
-  { value: 2, label: "Low" },
-  { value: 3, label: "Okay" },
-  { value: 4, label: "Good" },
-  { value: 5, label: "Great" },
-];
+const MOODS = [1, 2, 3, 4, 5];
 
 const TAGS = [
   "Happy", "Calm", "Hopeful", "Grateful",
@@ -16,84 +11,78 @@ const TAGS = [
   "Lonely", "Tired", "Overwhelmed", "Confused",
 ];
 
-const PROMPTS = [
-  "What is one thing that affected your mood today?",
-  "What is one small thing you can do to take care of yourself today?",
-  "Who is someone you can talk to when things feel heavy?",
-  "What is one thing you are proud of this week?",
-];
-
 export default function CheckIn() {
+  const { t } = useLang();
   const [mood, setMood] = useState(null);
   const [tags, setTags] = useState([]);
   const [reflection, setReflection] = useState("");
   const [message, setMessage] = useState("");
   const [justSaved, setJustSaved] = useState(false);
-  const prompt = PROMPTS[new Date().getDate() % PROMPTS.length];
+  const promptIndex = new Date().getDate() % 4;
 
   function toggleTag(tag) {
     setTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(tag) ? prev.filter((x) => x !== tag) : [...prev, tag]
     );
   }
 
   function handleSave() {
     if (mood === null) {
-      setMessage("Please choose how you feel before saving.");
+      setMessage("checkin.needMood");
       return;
     }
     saveCheckIn({ mood, tags, reflection: reflection.trim() });
     setMood(null);
     setTags([]);
     setReflection("");
-    setMessage("Check-in saved. Thank you for checking in today.");
+    setMessage("checkin.saved");
     setJustSaved(true);
   }
 
   return (
     <section className="card">
-      <h1>Daily Check-In</h1>
+      <h1>{t("checkin.title")}</h1>
 
-      <h2>How are you feeling?</h2>
+      <h2>{t("checkin.feeling")}</h2>
       <div className="mood-row">
         {MOODS.map((m) => (
           <button
-            key={m.value}
-            className={mood === m.value ? "mood active" : "mood"}
-            onClick={() => setMood(m.value)}
+            key={m}
+            className={mood === m ? "mood active" : "mood"}
+            onClick={() => setMood(m)}
           >
-            <strong>{m.value}</strong>
-            <span>{m.label}</span>
+            <strong>{m}</strong>
+            <span>{t("mood." + m)}</span>
           </button>
         ))}
       </div>
 
-      <h2>What describes it best?</h2>
+      <h2>{t("checkin.describe")}</h2>
       <div className="tag-row">
-        {TAGS.map((t) => (
+        {TAGS.map((tag) => (
           <button
-            key={t}
-            className={tags.includes(t) ? "tag active" : "tag"}
-            onClick={() => toggleTag(t)}
+            key={tag}
+            className={tags.includes(tag) ? "tag active" : "tag"}
+            onClick={() => toggleTag(tag)}
           >
-            {t}
+            {t("tag." + tag)}
           </button>
         ))}
       </div>
 
-      <h2>Reflection</h2>
-      <p className="prompt">{prompt}</p>
+      <h2>{t("checkin.reflection")}</h2>
+      <p className="prompt">{t("prompt." + promptIndex)}</p>
       <textarea
         rows="4"
         value={reflection}
         onChange={(e) => setReflection(e.target.value)}
-        placeholder="Write here (optional)"
+        placeholder={t("checkin.placeholder")}
       />
 
       <button className="primary" onClick={handleSave}>
-        Save check-in
+        {t("checkin.save")}
       </button>
-      {message && <p className="message">{message}</p>}
+      {message && <p className="message">{t(message)}</p>}
       {justSaved && <Recommendations />}
     </section>
   );

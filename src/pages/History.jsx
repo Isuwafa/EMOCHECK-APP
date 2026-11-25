@@ -1,14 +1,7 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getCheckIns, deleteCheckIn } from "../utils/storage";
-
-const MOOD_LABELS = {
-  1: "Very low",
-  2: "Low",
-  3: "Okay",
-  4: "Good",
-  5: "Great",
-};
+import { useLang } from "../i18n/LanguageContext";
 
 function formatDate(iso) {
   return new Date(iso).toLocaleString([], {
@@ -18,6 +11,7 @@ function formatDate(iso) {
 }
 
 export default function History() {
+  const { t } = useLang();
   const [entries, setEntries] = useState(getCheckIns());
 
   function handleDelete(id) {
@@ -31,16 +25,16 @@ export default function History() {
 
   return (
     <section className="card">
-      <h1>My Check-In History</h1>
+      <h1>{t("history.title")}</h1>
 
       {entries.length === 0 ? (
         <p>
-          You have no check-ins yet. <Link to="/checkin">Do your first check-in</Link>
+          {t("history.empty")} <Link to="/checkin">{t("history.first")}</Link>
         </p>
       ) : (
         <>
           <p className="summary">
-            {entries.length} check-in{entries.length > 1 ? "s" : ""} &middot; average mood {average} / 5
+            {entries.length} {t("history.checkins")} &middot; {t("history.average")} {average} / 5
           </p>
 
           <ul className="history-list">
@@ -49,14 +43,14 @@ export default function History() {
                 <div className="history-top">
                   <span className="history-date">{formatDate(entry.createdAt)}</span>
                   <span className="history-mood">
-                    {entry.mood} / 5 &middot; {MOOD_LABELS[entry.mood]}
+                    {entry.mood} / 5 &middot; {t("mood." + entry.mood)}
                   </span>
                 </div>
 
                 {entry.tags.length > 0 && (
                   <div className="tag-row">
-                    {entry.tags.map((t) => (
-                      <span key={t} className="tag static">{t}</span>
+                    {entry.tags.map((tag) => (
+                      <span key={tag} className="tag static">{t("tag." + tag)}</span>
                     ))}
                   </div>
                 )}
@@ -64,7 +58,7 @@ export default function History() {
                 {entry.reflection && <p className="history-reflection">{entry.reflection}</p>}
 
                 <button className="link-danger" onClick={() => handleDelete(entry.id)}>
-                  Delete this check-in
+                  {t("history.delete")}
                 </button>
               </li>
             ))}

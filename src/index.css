@@ -61,3 +61,6 @@ textarea { width: 100%; padding: 10px; border: 1px solid #c7d2fe; border-radius:
 .reco h2 { margin-top: 0; }
 .reco ul { padding-left: 18px; margin: 8px 0 0; }
 .reco li { margin-bottom: 10px; }
+.navbar .lang { display: flex; gap: 4px; }
+.lang-btn { background: transparent; color: #e0e7ff; border: 1px solid #a5b4fc; border-radius: 6px; padding: 2px 8px; cursor: pointer; font: inherit; }
+.lang-btn.active { background: white; color: #4f46e5; font-weight: 600; }
