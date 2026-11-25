@@ -1,6 +1,8 @@
 import { getRecommendations } from "../utils/recommend";
+import { useLang } from "../i18n/LanguageContext";
 
 export default function Recommendations() {
+  const { t } = useLang();
   const { level, resources } = getRecommendations();
   if (level === "none") return null;
 
@@ -8,17 +10,15 @@ export default function Recommendations() {
 
   return (
     <div className={distress ? "reco distress" : "reco"}>
-      <h2>{distress ? "Support we recommend right now" : "Recommended for you"}</h2>
-      <p>
-        {distress
-          ? "Your recent check-ins suggest things have been hard. You deserve support. Please reach out to one of these:"
-          : "Based on your latest check-in, these may help:"}
-      </p>
+      <h2>{distress ? t("reco.distressTitle") : t("reco.title")}</h2>
+      <p>{distress ? t("reco.distressText") : t("reco.text")}</p>
       <ul>
         {resources.map((r) => (
           <li key={r.id}>
             <strong>{r.name}</strong>
-            {r.phone && <> &middot; <a href={"tel:" + r.phone}>Call {r.phone}</a></>}
+            {r.phone && (
+              <> &middot; <a href={"tel:" + r.phone}>{t("support.call")} {r.phone}</a></>
+            )}
             <br />
             <span className="resource-meta">{r.location}</span>
           </li>
