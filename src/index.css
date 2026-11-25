@@ -64,3 +64,12 @@ textarea { width: 100%; padding: 10px; border: 1px solid #c7d2fe; border-radius:
 .navbar .lang { display: flex; gap: 4px; }
 .lang-btn { background: transparent; color: #e0e7ff; border: 1px solid #a5b4fc; border-radius: 6px; padding: 2px 8px; cursor: pointer; font: inherit; }
 .lang-btn.active { background: white; color: #4f46e5; font-weight: 600; }
+.onboarding { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; background: #eef2ff; }
+.onboarding-card { background: white; max-width: 480px; width: 100%; padding: 28px; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); text-align: center; }
+.onboarding-lang { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+.dots { display: flex; justify-content: center; gap: 8px; margin: 22px 0; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: #c7d2fe; }
+.dot.active { background: #4f46e5; }
+.onboarding-actions { display: flex; justify-content: center; gap: 8px; }
+.onboarding-actions .secondary { margin-left: 0; }
+.onboarding-actions .primary { margin-top: 0; }
